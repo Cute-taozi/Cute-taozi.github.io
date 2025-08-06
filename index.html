@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <title>一加11 ColorOS/氧OS互刷懒人包(TWRP卡刷方案)</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "微软雅黑", "Helvetica Neue", Arial, sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+      line-height: 1.6;
+      padding: 0 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      padding: 30px 0;
+      background: linear-gradient(135deg, #1a2a6c, #204a87);
+      color: white;
+      margin: 20px 0 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 28px;
+      margin: 15px 0;
+      color: white;
+    }
+
+    h2 {
+      font-size: 24px;
+      margin: 25px 0 15px;
+      color: #1a2a6c;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e0e7ff;
+    }
+
+    h3 {
+      font-size: 20px;
+      margin: 20px 0 10px;
+      color: #204a87;
+    }
+
+    .info-container {
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+      margin-bottom: 20px;
+    }
+
+    li {
+      margin-left: 25px;
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+    ul li::before {
+      content: "•";
+      color: #1a75ff;
+      font-weight: bold;
+      position: absolute;
+      left: -15px;
+    }
+
+    ol {
+      counter-reset: section;
+      list-style: none;
+      padding-left: 10px;
+    }
+
+    ol li {
+      counter-increment: section;
+      margin-bottom: 15px;
+      padding-left: 25px;
+      position: relative;
+    }
+
+    ol li::before {
+      content: counter(section);
+      background: #1a75ff;
+      color: white;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    a {
+      color: #1a75ff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: #0056b3;
+      text-decoration: underline;
+    }
+
+    .link-list {
+      background-color: #e0f2fe;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+    }
+
+    .key-point {
+      background-color: #e0f7ff;
+      border-left: 4px solid #1a75ff;
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .faq-item {
+      margin-bottom: 20px;
+      background: #f5f8ff;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #e0e7ff;
+    }
+
+    .faq-question {
+      background: #1a2a6c;
+      color: white;
+      padding: 15px;
+      font-weight: bold;
+    }
+
+    .faq-answer {
+      padding: 15px;
+    }
+
+    .watermark {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      color: rgba(0, 0, 0, 0.08);
+      font-size: 14px;
+      opacity: 0.8;
+      z-index: -1;
+    }
+
+    .footer {
+      margin-top: 50px;
+      padding: 30px 20px;
+      border-top: 1px solid #eee;
+      text-align: center;
+      color: #666;
+      font-size: 14px;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+    }
+    
+    .footer p {
+      margin: 10px 0;
+    }
+    
+    .source-btn {
+      display: inline-block;
+      margin: 15px auto;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #1a2a6c, #204a87);
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(26, 42, 108, 0.3);
+    }
+    
+    .source-btn:hover {
+      background: linear-gradient(135deg, #204a87, #2a5da0);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(26, 42, 108, 0.4);
+      text-decoration: none;
+    }
+    
+    .source-btn i {
+      margin-right: 8px;
+    }
+    
+    .link-box {
+      text-align: center;
+      margin: 25px 0;
+      padding: 20px;
+      background: #e0f7ff;
+      border-radius: 12px;
+    }
+    
+    .exclusive-section {
+      background: linear-gradient(135deg, #fff9db, #ffecb3);
+      border-left: 5px solid #ffb300;
+      padding: 20px;
+      margin: 30px 0;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 0 10px;
+      }
+      
+      h1 {
+        font-size: 22px;
+      }
+      
+      h2 {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="watermark" aria-hidden="true">本文档是桃子二次修改的版本</div>
+  
+  <header>
+    <h1>全球首发 | 一加11 ColorOS/氧OS互刷懒人包(TWRP卡刷方案)</h1>
+  </header>
+
+  <div class="info-container">
+    <h2>从前</h2>
+    <p>一加11从ColorOS刷到氧OS较为繁琐，需要通过fastboot线刷，并且存在诸多缺陷，比如容易变砖、容易丢失信号、容易导致升级到14、15后无法进入fastboot等。</p>
+    <p>而要刷原生系统的话，氧OS又几乎是必须先刷的，因此这成为了拦截很多人体验原生系统的门槛。</p>
+    
+    <h2>现在</h2>
+    <p>最近又重新弄了一台一加11来玩，免不了要各种ROM轮番刷一圈。为了更方便的在 ColorOS和氧OS、原生系统间直接互相切换，我设计了一套极其简单的方案，并将其制作成卡刷包。</p>
+  </div>
+  
+  <div class="info-container">
+    <h2>方案优势</h2>
+    <ul>
+      <li>熟悉操作：人人都熟悉的TWRP卡刷操作，避免内心恐惧</li>
+      <li>安全可靠：安全可靠的TWRP卡刷方案，完全不存在失败和变砖风险</li>
+      <li>一步到位：无需任何后续操作和刷入额外补丁，懒人操作一步到位</li>
+    </ul>
+  </div>
+  
+  <div class="info-container">
+    <h2>准备工作</h2>
+    <ol>
+      <li>
+        <strong>解锁bootloader</strong><br>
+        参考教程: <a href="https://www.bilibili.com/video/BV1gm421G7jB" target="_blank">B站解锁bootloader教程(1分50秒前)</a>
+      </li>
+      <li>
+        <strong>下载并刷入TWRP</strong><br>
+        <span class="key-point">TWRP文件来自酷安@Col_or</span>
+      </li>
+    </ol>
+    
+    <div class="link-list">
+      <a href="极速通道(百度网盘会员必看): https://pan.baidu.com/s/11UMp2NNjys-mxRlIeSJOSg?pwd=dxam" target="_blank">百度网盘链接: https://pan.baidu.com/s/11UMp2NNjys-mxRlIeSJOSg?pwd=dxam</a>
+      <div class="key-point">提取码: dxam</div>
+    </div>
+  </div>
+  
+  <div class="info-container">
+    <h2>一加11刷氧OS教程</h2>
+    <ol>
+      <li>
+        下载氧OS卡刷包，放手机根目录
+      </li>
+    </ol>
+    
+    <div class="link-list">
+      <a href="https://pan.baidu.com/s/1GEFlqmLzt0PCfQHGTAQdzA?pwd=dxam" target="_blank">百度网盘链接: https://pan.baidu.com/s/1GEFlqmLzt0PCfQHGTAQdzA?pwd=dxam</a>
+      <div class="key-point">提取码: dxam</div>
+    </div>
+    
+    <ol start="2">
+      <li>进入TWRP → 安装 → 选择氧OS卡刷包，滑动确认安装</li>
+      <li>
+        <strong>自动流程(请勿干预)</strong>:<br>
+        首次重启进入TWRP → 自动刷机 → 自动清除数据 → 最终进入氧OS系统
+      </li>
+    </ol>
+  </div>
+  
+  <div class="info-container">
+    <h2>后续可以进行的操作</h2>
+    <ul>
+      <li>锁屏安全：可以上锁bootloader(和海外买的一加11效果一样)</li>
+      <li>重置功能：可随意恢复出厂设置(和海外买的一加11效果一样)</li>
+      <li>系统升级：可以正常升级系统(和海外买的一加11效果一样)</li>
+    </ul>
+  </div>
+  
+  <div class="info-container">
+    <h2>刷回ColorOS步骤</h2>
+    <ol>
+      <li>
+        下载并刷入ColorOS卡刷包
+      </li>
+    </ol>
+    
+    <div class="link-list">
+      <a href="https://pan.baidu.com/s/1dJIH8AEjboFhdGjXQdtnig?pwd=dxam" target="_blank">百度网盘链接: https://pan.baidu.com/s/1dJIH8AEjboFhdGjXQdtnig?pwd=dxam</a>
+      <div class="key-point">提取码: dxam</div>
+    </div>
+  </div>
+
+  <div class="info-container">
+    <h2>常见问题解答</h2>
+    
+    <div class="faq-item">
+      <div class="faq-question">当前是ColorOS 14/15,能否刷氧OS 13?</div>
+      <div class="faq-answer">
+        可以,无视当前版本直接刷 
+        <a href="https://www.bilibili.com/video/BV1er3tzEET1/" target="_blank">https://www.bilibili.com/video/BV1er3tzEET1/</a>
+      </div>
+    </div>
+    
+    <div class="faq-item">
+      <极速通道(百度网盘会员必看):如何切换印度版/欧版/北美版?</div>
+      <div class="faq-answer">
+        先按前面的教程刷入氧OS全球版(GLO),再使用本地升级APP安装对应区域包<br>
+        
+        <div class="key-point">本地升级APP:</div>
+        <div class="link-list">
+          <a href="https://pan.baidu.com/s/1B40Qpk5KMK4qJNSdA0bFxA?pwd=dxam" target="_blank">https://pan.baidu.com/s/1B40Qpk5KMK4极速通道(百度网盘会员必看):qJNSdA0bFxA?pwd=dxam</a>
+          <div class="key-point">提取码: dxam</div>
+        </div>
+        
+        <div class="key-point">一加11氧13 A.09 IN印度版切换包:</div>
+        <div class="link-list">
+          <a href="https://pan.baidu.com/s/1z7ueir_lmiTBEZFidicGXA?pwd=dxam" target="_blank">https://pan.baidu.com/s/1z7ueir_lmiTBEZFidicGXA?pwd=dxam</a>
+          <div class="key-point">提取码: dxam</div>
+        </div>
+        
+        <div class="key-point">一加11氧13 A.09 EU欧版切换包:</div>
+        <div class="link-list">
+          <a href="https://pan.baidu.com/s/1rOOa0l6IjJ4JBI4DnsJlqQ?pwd=dxam" target="_blank">https://pan.baidu.com/s/1rOOa0l6IjJ4JBI4DnsJlqQ?pwd=dxam</a>
+          <div class="key-point">提取码: dxam</div>
+        </div>
+        
+        <div class="key-point">一加11氧13 A.09 NA北美版切换包:</div>
+        <div class="link-list">
+          <a href="https://pan.baidu.com/s/1Le6kON-iCSS89xQwxoVV1Q?pwd=dxam" target="_blank">https://pan.baidu.com/s/1Le6kON-iCSS89xQwxoVV1Q?pwd=dxam</a>
+          <div class="key-point">提取码: dxam</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 新增123云盘板块，调整到指定位置 -->
+    <div class="exclusive-section">
+      <h2>桃子123云盘不限速专属通道，没百度会员的看过来</h2>
+      <p>由于本人也没有百度网盘会员，单是下载一个刷机包都费了八九个小时，而且这还是我看了三四个广告，用了五张加速券的情况下，所以一个刷机包的时间成本都是很高的了，这还不加上断联的情况下。</p>
+      <p>所以为了满足大多数用户只有通用地区的包，在这里非常抱歉，没照顾到少数的小伙伴，因为本人也是纯为爱发电，不收取任何的利益费用，我感觉我做到这个份上已经很不错了，哈哈哈。自夸一下还是没毛病的吧。</p>
+      
+      <div class="link-box">
+        <a href="https://www.123912.com/s/E2Qmjv-kKjN3?pwd=CfH4#" 
+           target="_blank"
+           class="source-btn"
+           aria-label="下载TWRP和氧OS刷机包">
+          <i class="fas fa-download"></i>点击下载资源包
+        </a>
+        <div class="key-point" aria-hidden="true">提取码: CfH4</div>
+      </div>
+    </div>
+    
+    <div class="faq-item">
+      <div class="faq-question">从nameless等原生系统能否直接刷回?</div>
+      <div class="faq-answer">
+        可以直接使用本教程
+      </div>
+    </div>
+  </div>
+  
+  <div class="info-container">
+    <h2>致谢与捐赠</h2>
+    <p>
+      由于我有远程刷机业务获得收入，因此不接受任何捐赠。如果大家希望给予支持，可以捐赠给本文中TWRP的作者。没有他的TWRP就没有我这个项目。
+    </p>
+    <p>
+      以下是他的捐赠链接(来源 <a href="https://t.me/colorospro/332" target="_blank">https://t.me/colorospro/332</a> )
+    </p>
+  </div>
+
+  <div class="footer">
+    <p>本网站为二次修改优化版本，若有版权纠纷，联系二创者删除即可</p>
+    <p>联系邮箱：<a href="mailto:2253896298@qq.com">2253896298@qq.com</a></p>
+    
+    <a href="https://www.daxiaamu.com/" target="_blank" class="source-btn">
+      <i class="fas fa-external-link-alt"></i>前往原著博客
+    </a>
+    
+    <p>原著来源：大侠阿木 (https://www.daxiaamu.com/)</p>
+    <p>粤icp备14100537号 | 粤公网安备44030602002349号</p>
+    <p>Theme: MDx By AxtonYao</p>
+  </div>
+
+</body>
+</html>
